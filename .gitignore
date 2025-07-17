@@ -1,0 +1,20 @@
+# Ignore Visual Studio files
+.vs/
+*.user
+*.suo
+
+# Ignore build outputs
+bin/
+obj/
+
+# Ignore database backups
+*.mdf
+*.ldf
+
+# Ignore OS files
+Thumbs.db
+.DS_Store
+
+# Ignore Node modules (for Next.js)
+node_modules/
+.next/

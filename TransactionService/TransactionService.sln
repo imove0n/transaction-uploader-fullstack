@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36310.24
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionService", "TransactionService\TransactionService.csproj", "{1FAAB3FB-87AE-4D9D-85B6-1CF89E478388}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		TransactionUploader\UploadCsv.razor = TransactionUploader\UploadCsv.razor
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1FAAB3FB-87AE-4D9D-85B6-1CF89E478388}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FAAB3FB-87AE-4D9D-85B6-1CF89E478388}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FAAB3FB-87AE-4D9D-85B6-1CF89E478388}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FAAB3FB-87AE-4D9D-85B6-1CF89E478388}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {56C97812-D0FE-4EDE-9BDF-7A06630DE790}
+	EndGlobalSection
+EndGlobal

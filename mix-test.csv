@@ -1,0 +1,3 @@
+REF6001,15,150.25,NextJS Mixed User 1,18/07/2025 11:00:00,ABC,Buy,Open
+REF6001,25,300.75,NextJS Mixed User 2,18/07/2025 11:05:00,XYZ,Sell,Open   
+REF6002,30,400.00,NextJS Mixed User 3,18/07/2025 11:10:00,XYZ,Buy,InvalidStatus

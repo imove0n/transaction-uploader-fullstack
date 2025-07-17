@@ -1,0 +1,75 @@
+﻿[HttpPost("UploadCsv")]
+public async Task<IActionResult> UploadCsv(IFormFile file)
+{
+    try
+    {
+        if (file == null || file.Length == 0)
+            return BadRequest(new { Message = "No file uploaded." });
+
+        if (file.Length > 1024 * 1024) // 1 MB limit
+            return BadRequest(new { Message = "File size exceeds 1 MB." });
+
+        var transactions = new List<Transaction>();
+        var invalidRecords = new List<string>();
+
+        using (var reader = new StreamReader(file.OpenReadStream()))
+        {
+            int lineNumber = 0;
+            while (!reader.EndOfStream)
+            {
+                var line = await reader.ReadLineAsync();
+                lineNumber++;
+
+                if (string.IsNullOrWhiteSpace(line)) continue;
+
+                var columns = line.Split(',');
+
+                if (columns.Length != 8) // ✅ Ensure we expect 8 columns now
+                {
+                    invalidRecords.Add($"Line {lineNumber}: Invalid column count.");
+                    continue;
+                }
+
+                try
+                {
+                    var transaction = new Transaction
+                    {
+                        ReferenceNumber = columns[0],
+                        Quantity = long.Parse(columns[1]),
+                        Amount = decimal.Parse(columns[2]),
+                        Name = columns[3],
+                        TransactionDate = DateTime.ParseExact(columns[4], "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture),
+                        Symbol = columns[5],
+                        OrderSide = columns[6],
+                        OrderStatus = columns[7] // ✅ correct index for 8th column
+                    };
+
+                    if (_context.Transactions.Any(t => t.ReferenceNumber == transaction.ReferenceNumber))
+                    {
+                        invalidRecords.Add($"Line {lineNumber}: Duplicate ReferenceNumber.");
+                        continue;
+                    }
+
+                    transactions.Add(transaction);
+                }
+                catch (Exception exInner)
+                {
+                    invalidRecords.Add($"Line {lineNumber}: {exInner.Message}");
+                }
+            }
+        }
+
+        if (invalidRecords.Count > 0)
+            return BadRequest(new { Message = "File contains invalid records. File rejected.", Errors = invalidRecords });
+
+        _context.Transactions.AddRange(transactions);
+        await _context.SaveChangesAsync();
+
+        return Ok(new { Message = "File uploaded successfully.", RecordsInserted = transactions.Count });
+    }
+    catch (Exception ex)
+    {
+        // ✅ Catch any unhandled error and return details
+        return StatusCode(500, new { Message = "Internal Server Error", Details = ex.Message });
+    }
+}
